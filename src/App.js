@@ -1,36 +1,39 @@
-import React from "react";
+import React, { Component } from "react";
+import Header from "./Header.js";
+import NotesList from "./NotesList.js";
 
-const App = () => (
-  <div>
-    <header className="app-header">
-      <h1 className="app-header__title">Super Sticky Notes</h1>
-      <aside className="app-header__controls">
-        <button className="add-new">+ New Note</button>
-        <input
-          className="search"
-          type="text"
-          placeholder="Type here to search..."
-        />
-      </aside>
-    </header>
-    <ul className="notes-list">
-      <li className="note">
-        <input className="note__title" type="text" placeholder="Title" />
-        <textarea className="note__description" placeholder="Description..." />
-        <span className="note__delete">X</span>
-      </li>
-      <li className="note">
-        <input className="note__title" type="text" placeholder="Title" />
-        <textarea className="note__description" placeholder="Description..." />
-        <span className="note__delete">X</span>
-      </li>
-      <li className="note">
-        <input className="note__title" type="text" placeholder="Title" />
-        <textarea className="note__description" placeholder="Description..." />
-        <span className="note__delete">X</span>
-      </li>
-    </ul>
-  </div>
-);
+class App extends Component {
+  state = {
+    notes: [
+      {
+        id: 0,
+        title: "eat",
+        description: "reese peanut butter cups",
+        doesMatchSearch: true
+      },
+      {
+        id: 1,
+        title: "sleep",
+        description: "eight hours",
+        doesMatchSearch: true
+      },
+      {
+        id: 2,
+        title: "code",
+        description: "build an awesome ui",
+        doesMatchSearch: true
+      }
+    ],
+    searchText: "search here"
+  };
+  render() {
+    return (
+      <div>
+        <Header />
+        <NotesList />
+      </div>
+    );
+  }
+}
 
 export default App;
