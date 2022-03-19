@@ -26,11 +26,31 @@ class App extends Component {
     this.setState({ notes: newNotes });
   };
 
+  onType = (editMeID, updatedKey, updatedValue) => {
+    // editMeID = ID of the edited note
+    // updatedKey = title or description field
+    // updatedValue = what it was updated to
+    const updatedNotes = this.state.notes.map((note) => {
+      if (note.id !== editMeID) {
+        return note;
+      } else {
+        if (updatedKey === "title") {
+          note.title = updatedValue;
+          return note;
+        } else {
+          note.description = updatedValue;
+          return note;
+        }
+      }
+    });
+    this.setState({ notes: updatedNotes });
+  };
+
   render() {
     return (
       <div>
         <Header addNote={this.addNote} searchText={this.state.searchText} />
-        <NotesList notes={this.state.notes} />
+        <NotesList onType={this.onType} notes={this.state.notes} />
       </div>
     );
   }
