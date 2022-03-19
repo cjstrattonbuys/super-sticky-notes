@@ -46,11 +46,44 @@ class App extends Component {
     this.setState({ notes: updatedNotes });
   };
 
+  onSearch = (text) => {
+    const newSearchText = text.toLowerCase();
+    const updatedNotes = this.state.notes.map((note) => {
+      if (!newSearchText) {
+        note.doesMatchSearch = true;
+        return note;
+      } else {
+        const title = note.title.toLowerCase();
+        const description = note.description.toLowerCase();
+        const titleMatch = title.includes(newSearchText);
+        const descriptionMatch = description.includes(newSearchText);
+        const doesMatch = titleMatch || descriptionMatch;
+        if (doesMatch) {
+          note.doesMatchSearch = true;
+        } else {
+          note.doesMatchSearch = false;
+        }
+        return note;
+      }
+    });
+    this.setState({
+      notes: updatedNotes,
+      searchText: newSearchText
+    });
+  };
+
   render() {
     return (
       <div>
-        <Header addNote={this.addNote} searchText={this.state.searchText} />
-        <NotesList onType={this.onType} notes={this.state.notes} />
+        <Header 
+          onSearch={this.onSearch}
+          addNote={this.addNote} 
+          searchText={this.state.searchText} 
+        />
+        <NotesList 
+          onType={this.onType} 
+          notes={this.state.notes} 
+        />
       </div>
     );
   }
