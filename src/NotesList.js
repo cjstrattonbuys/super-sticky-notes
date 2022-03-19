@@ -7,6 +7,7 @@ const NotesList = (props) => {
 
   const renderNote = (note) => (
     <Note 
+      removeNote={props.removeNote}
       onType={props.onType} 
       note={note} 
       key={note.id} 

@@ -72,6 +72,24 @@ class App extends Component {
     });
   };
 
+  removeNote = (noteId) => {
+    // to learn how the .filter method works, check out https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+    const updatedNotes = this.state.notes.filter((note) => note.id !== noteId);
+    this.setState({ notes: updatedNotes });
+  };
+
+  componentDidUpdate() {
+    const stateString = JSON.stringify(this.state);
+    localStorage.setItem("stateString", stateString);
+  }
+  componentDidMount() {
+    const stateString = localStorage.getItem("stateString");
+    if (stateString) {
+      const savedState = JSON.parse(stateString);
+      this.setState(savedState);
+    }
+  }
+
   render() {
     return (
       <div>
@@ -81,6 +99,7 @@ class App extends Component {
           searchText={this.state.searchText} 
         />
         <NotesList 
+          removeNote={this.removeNote}
           onType={this.onType} 
           notes={this.state.notes} 
         />
